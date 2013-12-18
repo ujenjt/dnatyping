@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<style type="text/css">
+		body {
+			padding-left: 10px;
+		}
+
+		h2 {
+			font-family: Helvetica;
+			color: #555;
+			margin-bottom: 5px;
+		}
+
+		h3 {
+			font-family: Helvetica;
+			color: #555;
+			margin-bottom: 5px;
+			font-size: 17px;
+		}
+
+		.back-link {
+			margin: 0px;
+			padding: 0px;
+		}
+		
+		.alignment {
+			font-family:Consolas, monospace;
+			font-size: 14px;
+			line-height: 2px;
+			padding-top: 10px;
+		}
+		
+		.red {
+			background-color: #F9A5A4;
+		}
+		
+		.numbers {
+			line-height: 0px;
+			color: #aaa;
+		}
+		
+		.cursors {
+			line-height: 5px;
+			color: #888;
+		}
+
+		.fasta-header {
+			margin: 2px;
+			padding: 0px;
+		}
+	</style>
+</head>
+<body>
+	<a href="{{link}}" class="back-link">back to alignments table</a>
+	<div class="alignment_description">
+		<h3>First sequence <i>{{sp1}}</i>, {{dnalen1}}bp</h3>
+		{{#fasta_headers_1}}
+  			<p class="fasta-header">{{header}}</p>
+		{{/fasta_headers_1}}
+		<h3>Second sequence <i>{{sp2}}</i>, {{dnalen2}}bp</h3>
+		{{#fasta_headers_2}}
+  			<p class="fasta-header">{{header}}</p>
+		{{/fasta_headers_2}}
+	</div>
+	<div class="alignment">
+		<pre class="numbers">{{numbers}}</pre>
+		<pre class="cursors">{{cursors}}</pre>
+		<pre>{{{aseq1}}}</pre>
+		<pre>{{{aseq2}}}</pre>
+		<br>
+		<p>Mismatch count: <strong>{{mismatch_count}}</strong></p>
+		<p>Score: <strong>{{score}}</strong></p>
+	</div>
+	<div class="alignment">
+		<pre class="numbers">{{anumbers}}</pre>
+		<pre class="cursors">{{acursors}}</pre>
+		<pre>{{{aaseq1}}}</pre>
+		<pre>{{{aaseq2}}}</pre>
+		<br>
+		<p>Mismatch count: <strong>{{amismatch_count}}</strong></p>
+	</div>
+</body>
+</html>

@@ -64,6 +64,7 @@ def pairwise_align(sequences_by_species):
 
 	alignments = [[ None for i in xrange(sequences_count)] for j in xrange(sequences_count)]
 	for i in xrange(sequences_count):
+		print sequences[i].specie
 		for j in xrange(sequences_count):
 			alignments[i][j] = protein_align(sequences[i], sequences[j])
 
