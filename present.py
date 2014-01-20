@@ -50,7 +50,7 @@ def append_x(names):
 	names.insert(0, ('', 'none', ''))
 	return names
 
-def calc(s1, s2, step):
+def calcProtein(s1, s2, step):
 	nseq1 = nseq2 = numbers = cursors = ''
 	tmp = 0
 
@@ -87,6 +87,44 @@ def calc(s1, s2, step):
 
 	return Bunch(nseq1=nseq1, nseq2=nseq2, numbers=numbers, cursors=cursors, mismatch_count=mismatch_count)
 
+def calcNucleotide(s1, s2, step, mutations):
+	nseq1 = nseq2 = numbers = cursors = ''
+	tmp = 0
+
+	cnumber = step
+	mismatch_count = 0
+
+	for i in xrange(len(s1)):
+		# print i
+		if((i + 1) % step == 0):
+			# print 'i'
+			numbers += str(cnumber)
+			tmp = len(str(cnumber)) - 1
+			# print 'tmp', tmp
+
+			cursors += '|'
+			for x in xrange(len(str(cnumber)) - 1):
+				# print '|', str(cnumber)
+				cursors += ' '
+			cnumber += step
+		else:
+			if(tmp != 0):
+				tmp -= 1
+			else:
+				numbers += ' '
+				cursors += ' '
+
+		if(s1[i] != s2[i]):
+			color = 'yellow' if mutations[i] == 'nucleotide' else 'red'
+			nseq1 += pystache.render('<span class=\"' + color + '\">{{symbol}}</span>', {'symbol': s1[i]})
+			nseq2 += pystache.render('<span class=\"' + color + '\">{{symbol}}</span>', {'symbol': s2[i]})
+			mismatch_count += 1
+		else:
+			nseq1 += s1[i]
+			nseq2 += s2[i]
+
+	return Bunch(nseq1=nseq1, nseq2=nseq2, numbers=numbers, cursors=cursors, mismatch_count=mismatch_count)
+
 def createModelFotTemplate(seq1, seq2, alignment):
 	dnaseq1 = alignment.aseq1
 	dnaseq2 = alignment.aseq2
@@ -103,8 +141,8 @@ def createModelFotTemplate(seq1, seq2, alignment):
 	fasta_headers_1 = [{'header':header} for header in seq1.row_headers]
 	fasta_headers_2 = [{'header':header} for header in seq2.row_headers]
 
-	b1 = calc(dnaseq1, dnaseq2, 50)
-	b2 = calc(aseq1, aseq2, 20)
+	b1 = calcNucleotide(dnaseq1, dnaseq2, 50, alignment.mutations)
+	b2 = calcProtein(aseq1, aseq2, 20)
 
 	return {
 		'sp1': sp1,

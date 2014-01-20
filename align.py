@@ -33,6 +33,7 @@ def protein_align(seq1, seq2):
 	)
 
 	mismatch = pos1 = pos2 = 0
+	mutations = {}
 
 	for n in xrange(len(apseq1)):
 		triplet_nucl1 = get_triplet(seq1.seq, pos1, apseq1[n])
@@ -45,6 +46,12 @@ def protein_align(seq1, seq2):
 
 		each_mismatch = 0
 		for i in xrange(3):
+			if(triplet_nucl1[i] != triplet_nucl2[i]):
+				if(apseq1[n] != apseq2[n]):
+					mutations[3 * n + i] = 'protein'
+				else:
+					mutations[3 * n + i] = 'nucleotide'
+			
 			each_mismatch += 1 if triplet_nucl1[i] != triplet_nucl2[i] else 0
 
 		if apseq1[n] != apseq2[n]:
@@ -52,7 +59,7 @@ def protein_align(seq1, seq2):
 
 		mismatch += each_mismatch
 
-	return Bunch(score=mismatch, aseq1=aseq1, aseq2=aseq2, aaseq1=apseq1, aaseq2=apseq2)
+	return Bunch(score=mismatch, mutations=mutations, aseq1=aseq1, aseq2=aseq2, aaseq1=apseq1, aaseq2=apseq2)
 
 
 def pairwise_align(sequences_by_species):
