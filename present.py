@@ -1,6 +1,8 @@
 from string import Template
 from utils import Bunch
 import pystache
+import shutil
+import os.path
 
 tmpl_file = open('assets/template.html', 'r')
 output_file = open('out/result.html', 'w')
@@ -125,9 +127,18 @@ def createModelFotTemplate(seq1, seq2, alignment):
 		'link': 'result.html'
 	}
 
+def copy_css():
+	cssdir = './out/css' 
+	if not os.path.exists(cssdir):
+		os.makedirs(cssdir)
+
+	shutil.copy2('./assets/style.css', './out/css')
+
 def present(alignment_data):
 	names = []
 	sequences_count = len(alignment_data.sequences)
+
+	copy_css()
 
 	tmp = open('./assets/aligment_template.mustache', 'r')
 	mustache = tmp.read()
