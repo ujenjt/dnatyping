@@ -11,7 +11,7 @@ def sequences(stream):
 
 		if newline:
 			description = newline if newline[0] == '>' and not sequence else description
-		
+
 		if newline == '':
 			not_eof = False
 			yield (description, sequence)
@@ -45,7 +45,7 @@ def translate_dna(sequence):
 
     aseq = ''
     for n in range(0,len(sequence),3):
-        if gencode.has_key(sequence[n:n+3]) == True:
+        if sequence[n:n+3] in gencode:
             aseq += gencode[sequence[n:n+3]]
 
     return aseq
@@ -73,9 +73,9 @@ def import_data(inp):
 	merged_sequences = parse_data(inp)
 
 	sequences_by_species = dict()
-	for key, value in merged_sequences.iteritems():
+	for key, value in merged_sequences.items():
 		sequences = sequences_by_species.get(value.specie, [])
 		sequences.append(value)
 		sequences_by_species[value.specie] = sequences
-	
+
 	return sequences_by_species

@@ -7,9 +7,9 @@ def align(seq1, seq2):
 	matrix = matlist.pam60
 	gap_open = -5
 	gap_extend = -1
- 
+
 	alns = pairwise2.align.globalds(seq1, seq2, matrix, gap_open, gap_extend)
- 
+
 	top_aln = alns[0]
 	aln_seq1, aln_seq2, score, begin, end = top_aln
 	return aln_seq1, aln_seq2
@@ -35,7 +35,7 @@ def protein_align(seq1, seq2):
 	mismatch = pos1 = pos2 = 0
 	mutations = {}
 
-	for n in xrange(len(apseq1)):
+	for n in range(len(apseq1)):
 		triplet_nucl1 = get_triplet(seq1.seq, pos1, apseq1[n])
 		pos1 += 3 if triplet_nucl1 != '---' else 0
 		aseq1 += triplet_nucl1
@@ -45,13 +45,13 @@ def protein_align(seq1, seq2):
 		aseq2 += triplet_nucl2
 
 		each_mismatch = 0
-		for i in xrange(3):
+		for i in range(3):
 			if(triplet_nucl1[i] != triplet_nucl2[i]):
 				if(apseq1[n] != apseq2[n]):
 					mutations[3 * n + i] = 'protein'
 				else:
 					mutations[3 * n + i] = 'nucleotide'
-			
+
 			each_mismatch += 1 if triplet_nucl1[i] != triplet_nucl2[i] else 0
 
 		if apseq1[n] != apseq2[n]:
@@ -64,15 +64,15 @@ def protein_align(seq1, seq2):
 
 def pairwise_align(sequences_by_species):
 	sequences = []
-	for key, value in sequences_by_species.iteritems():
+	for key, value in sequences_by_species.items():
 		sequences += value
 
 	sequences_count = len(sequences)
 
-	alignments = [[ None for i in xrange(sequences_count)] for j in xrange(sequences_count)]
-	for i in xrange(sequences_count):
-		print sequences[i].specie
-		for j in xrange(sequences_count):
+	alignments = [[ None for i in range(sequences_count)] for j in range(sequences_count)]
+	for i in range(sequences_count):
+		print(sequences[i].specie)
+		for j in range(sequences_count):
 			alignments[i][j] = protein_align(sequences[i], sequences[j])
 
 	return Bunch(sequences=sequences, alignments=alignments)

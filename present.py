@@ -40,7 +40,7 @@ def convert(names):
 
 
 def append_names(names, data):
-	for i in xrange(len(data)):
+	for i in range(len(data)):
 		data[i].insert(0, names[i])
 	pass
 	return data
@@ -57,7 +57,7 @@ def calcProtein(s1, s2, step):
 	cnumber = step
 	mismatch_count = 0
 
-	for i in xrange(len(s1)):
+	for i in range(len(s1)):
 		# print i
 		if((i + 1) % step == 0):
 			# print 'i'
@@ -66,7 +66,7 @@ def calcProtein(s1, s2, step):
 			# print 'tmp', tmp
 
 			cursors += '|'
-			for x in xrange(len(str(cnumber)) - 1):
+			for x in range(len(str(cnumber)) - 1):
 				# print '|', str(cnumber)
 				cursors += ' '
 			cnumber += step
@@ -94,7 +94,7 @@ def calcNucleotide(s1, s2, step, mutations):
 	cnumber = step
 	mismatch_count = 0
 
-	for i in xrange(len(s1)):
+	for i in range(len(s1)):
 		# print i
 		if((i + 1) % step == 0):
 			# print 'i'
@@ -103,7 +103,7 @@ def calcNucleotide(s1, s2, step, mutations):
 			# print 'tmp', tmp
 
 			cursors += '|'
-			for x in xrange(len(str(cnumber)) - 1):
+			for x in range(len(str(cnumber)) - 1):
 				# print '|', str(cnumber)
 				cursors += ' '
 			cnumber += step
@@ -181,11 +181,11 @@ def present(alignment_data):
 	tmp = open('./assets/aligment_template.mustache', 'r')
 	mustache = tmp.read()
 
-	data = [[(0, 'none', '') for i in xrange(sequences_count)] for j in xrange(sequences_count)]
-	for i in xrange(sequences_count):
+	data = [[(0, 'none', '') for i in range(sequences_count)] for j in range(sequences_count)]
+	for i in range(sequences_count):
 		names.append(alignment_data.sequences[i].specie)
 
-		for j in xrange(sequences_count):
+		for j in range(sequences_count):
 			if (alignment_data.sequences[i].specie == alignment_data.sequences[j].specie):
 				marker = 'green'
 			elif (alignment_data.alignments[i][j].score < 8):
